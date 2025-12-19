@@ -3,7 +3,12 @@
 import { motion } from 'framer-motion';
 import type { ReactNode, ButtonHTMLAttributes } from 'react';
 
-interface PixelButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+// Omit animation props that conflict with Framer Motion
+type ButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>,
+  'onAnimationStart' | 'onAnimationEnd' | 'onDrag' | 'onDragStart' | 'onDragEnd'
+>;
+
+interface PixelButtonProps extends ButtonProps {
   children: ReactNode;
   variant?: 'primary' | 'secondary' | 'danger';
   size?: 'sm' | 'md' | 'lg';
