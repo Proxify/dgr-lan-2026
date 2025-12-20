@@ -76,6 +76,24 @@ export function HeroSection() {
         }}
       />
 
+      {/* DGR Gaming Logo Watermark */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <motion.div
+          className="relative w-[500px] h-[500px] sm:w-[600px] sm:h-[600px] md:w-[700px] md:h-[700px] opacity-[0.15]"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 0.15, scale: 1 }}
+          transition={{ delay: 0.3, duration: 1 }}
+        >
+          <Image
+            src="/images/generated/dgr_gaming_2026.png"
+            alt=""
+            fill
+            className="object-contain"
+            priority
+          />
+        </motion.div>
+      </div>
+
       {/* Main Content */}
       <div
         ref={contentRef}
