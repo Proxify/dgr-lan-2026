@@ -85,6 +85,34 @@ export const SQUAD_MEMBERS: SquadMember[] = [
     playerClass: 'Berserker',
     avatar: '/avatars/player-12.svg',
   },
+  {
+    id: 13,
+    name: 'Robert Ehrlich',
+    displayName: 'Robert Ehrlich',
+    playerClass: 'Warrior',
+    avatar: '/avatars/player-13.svg',
+  },
+  {
+    id: 14,
+    name: 'Shane Granger',
+    displayName: 'Shane Granger',
+    playerClass: 'Scout',
+    avatar: '/avatars/player-14.svg',
+  },
+  {
+    id: 15,
+    name: 'Slade Granger',
+    displayName: 'Slade Granger',
+    playerClass: 'Assassin',
+    avatar: '/avatars/player-15.svg',
+  },
+  {
+    id: 16,
+    name: 'Devlin Hunter',
+    displayName: 'Devlin Hunter',
+    playerClass: 'Hunter',
+    avatar: '/avatars/player-16.svg',
+  },
 ];
 
 // Get squad member by name

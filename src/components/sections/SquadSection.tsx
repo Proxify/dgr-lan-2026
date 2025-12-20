@@ -104,7 +104,7 @@ export function SquadSection() {
             <Swords className="w-8 h-8 text-neon-pink transform scale-x-[-1]" />
           </div>
           <p className="font-terminal text-xl text-gray-400">
-            The DGR Gaming crew. 12 legends. 1 destination.
+            The DGR Gaming crew. 16 legends. 1 destination.
           </p>
         </motion.div>
 
@@ -133,7 +133,7 @@ export function SquadSection() {
             <div className="flex items-center justify-center gap-2 mb-2">
               <Users className="w-6 h-6 text-neon-green" />
               <span className="font-pixel text-3xl text-neon-green">{confirmedCount}</span>
-              <span className="font-pixel text-xl text-gray-500">/ 12</span>
+              <span className="font-pixel text-xl text-gray-500">/ 16</span>
             </div>
             <span className="font-terminal text-gray-400">Confirmed</span>
           </div>
