@@ -96,10 +96,11 @@ export async function GET() {
       const errorText = await response.text();
       console.error('Discord API error:', response.status, errorText);
 
-      // If rate limited or API error, trust Discord-authenticated users for this private event
-      if (response.status === 429 || response.status >= 500) {
+      // If rate limited, token expired, or API error, trust Discord-authenticated users for this private event
+      // 401 = token expired/invalid, 429 = rate limited, 500+ = server error
+      if (response.status === 401 || response.status === 429 || response.status >= 500) {
         if (user.app_metadata?.provider === 'discord') {
-          console.log('Discord API unavailable, trusting Discord-authenticated user');
+          console.log(`Discord API issue (${response.status}), trusting Discord-authenticated user`);
           return NextResponse.json({
             isMember: true,
             guildName: 'DGR Gaming',

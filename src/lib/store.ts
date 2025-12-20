@@ -66,6 +66,13 @@ export const useRSVPStore = create<RSVPState>()(
                 },
                 isSubmitted: true,
               });
+            } else {
+              // No existing RSVP found - reset the submitted state
+              // This handles cases where localStorage has stale data
+              set({
+                currentResponse: initialFormState,
+                isSubmitted: false,
+              });
             }
           }
         } catch (error) {
