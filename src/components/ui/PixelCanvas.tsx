@@ -134,7 +134,7 @@ export function PixelCanvas({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const pixelsRef = useRef<Pixel[]>([]);
-  const animationRef = useRef<number>();
+  const animationRef = useRef<number | undefined>(undefined);
   const timePreviousRef = useRef<number>(performance.now());
 
   useEffect(() => {
