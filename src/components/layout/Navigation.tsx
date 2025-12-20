@@ -2,12 +2,14 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 
 const navLinks = [
   { href: '#countdown', label: 'Countdown' },
   { href: '#details', label: 'Details' },
+  { href: '#schedule', label: 'Schedule' },
+  { href: '#rules', label: 'Rules' },
   { href: '#squad', label: 'Squad' },
   { href: '#location', label: 'Location' },
   { href: '#rsvp', label: 'RSVP' },
@@ -106,47 +108,41 @@ export function Navigation() {
         </div>
       </motion.nav>
 
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            className="fixed inset-0 z-40 md:hidden"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            {/* Backdrop */}
-            <motion.div
-              className="absolute inset-0 bg-retro-black/95 backdrop-blur-md"
-              onClick={() => setIsMobileMenuOpen(false)}
-            />
+      {/* Mobile Menu - using CSS transitions to avoid AnimatePresence hydration issues */}
+      <div
+        className={`
+          fixed inset-0 z-40 md:hidden
+          transition-all duration-300 ease-in-out
+          ${isMobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}
+        `}
+      >
+        {/* Backdrop */}
+        <div
+          className="absolute inset-0 bg-retro-black/95 backdrop-blur-md"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
 
-            {/* Menu Content */}
-            <motion.div
-              className="absolute inset-x-0 top-16 p-4"
-              initial={{ y: -20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -20, opacity: 0 }}
-              transition={{ delay: 0.1 }}
-            >
-              <div className="bg-retro-dark border-2 border-neon-blue p-6 space-y-4">
-                {navLinks.map((link, index) => (
-                  <motion.button
-                    key={link.href}
-                    onClick={() => handleNavClick(link.href)}
-                    className="block w-full text-left font-pixel text-sm text-white hover:text-neon-pink transition-colors py-2 border-b border-gray-700 last:border-0"
-                    initial={{ x: -20, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: 0.1 + index * 0.05 }}
-                  >
-                    {link.label}
-                  </motion.button>
-                ))}
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+        {/* Menu Content */}
+        <div
+          className={`
+            absolute inset-x-0 top-16 p-4
+            transition-all duration-300 ease-in-out
+            ${isMobileMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0'}
+          `}
+        >
+          <div className="bg-retro-dark border-2 border-neon-blue p-6 space-y-4">
+            {navLinks.map((link) => (
+              <button
+                key={link.href}
+                onClick={() => handleNavClick(link.href)}
+                className="block w-full text-left font-pixel text-sm text-white hover:text-neon-pink transition-colors py-2 border-b border-gray-700 last:border-0"
+              >
+                {link.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
     </>
   );
 }
