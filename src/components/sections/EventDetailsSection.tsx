@@ -147,17 +147,17 @@ export function EventDetailsSection() {
           viewport={{ once: true }}
           transition={{ delay: 0.5 }}
         >
-          <div className="inline-flex items-center gap-8 px-8 py-4 bg-retro-dark border border-gray-700">
+          <div className="inline-flex flex-col sm:flex-row items-center gap-4 sm:gap-8 px-6 sm:px-8 py-4 bg-retro-dark border border-gray-700">
             <div className="flex items-center gap-2">
               <Wifi className="w-5 h-5 text-neon-green" />
               <span className="font-terminal text-gray-300">High-Speed Internet</span>
             </div>
-            <div className="w-px h-6 bg-gray-700" />
+            <div className="hidden sm:block w-px h-6 bg-gray-700" />
             <div className="flex items-center gap-2">
               <Gamepad2 className="w-5 h-5 text-neon-pink" />
               <span className="font-terminal text-gray-300">Gaming Ready</span>
             </div>
-            <div className="w-px h-6 bg-gray-700" />
+            <div className="hidden sm:block w-px h-6 bg-gray-700" />
             <div className="flex items-center gap-2">
               <UtensilsCrossed className="w-5 h-5 text-pixel-yellow" />
               <span className="font-terminal text-gray-300">Full Kitchen</span>
