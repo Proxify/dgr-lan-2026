@@ -110,7 +110,10 @@ export function SquadMemberCard({ member, index, attendanceStatus, discordUserna
 
   return (
     <motion.div
-      className="group relative h-full"
+      className="group relative h-full cursor-pointer outline-none"
+      tabIndex={0}
+      role="button"
+      aria-label={`${member.displayName} - ${member.playerClass}${formattedDiscordName ? ` (${formattedDiscordName})` : ''}`}
       initial={{ opacity: 0, y: 30, scale: 0.9 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, margin: '-30px' }}
@@ -146,6 +149,8 @@ export function SquadMemberCard({ member, index, attendanceStatus, discordUserna
           transition-all duration-300
           group-hover:border-neon-pink
           group-hover:shadow-[0_0_20px_rgba(255,0,128,0.3)]
+          group-focus:border-neon-pink
+          group-focus:shadow-[0_0_20px_rgba(255,0,128,0.3)]
           ${attendanceStatus === 'no' ? 'opacity-50 grayscale-[30%]' : ''}
         `}
       >
@@ -178,7 +183,7 @@ export function SquadMemberCard({ member, index, attendanceStatus, discordUserna
         </p>
       </div>
 
-      {/* Discord Username Tooltip on Hover */}
+      {/* Discord Username Tooltip on Hover/Focus */}
       {formattedDiscordName && (
         <div
           className="
@@ -190,6 +195,8 @@ export function SquadMemberCard({ member, index, attendanceStatus, discordUserna
             opacity-0 scale-90
             transition-all duration-200
             group-hover:opacity-100 group-hover:scale-100
+            group-focus:opacity-100 group-focus:scale-100
+            group-focus-within:opacity-100 group-focus-within:scale-100
             pointer-events-none
             z-30
           "
