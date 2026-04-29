@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import type { SquadMember, AttendanceStatus } from '@/types';
-import { Gamepad2, Swords, Heart, Target, Skull, Wand2, Eye, Shield, Wrench, Music, Crown, Zap, Check, HelpCircle, X, Crosshair, Compass, Footprints } from 'lucide-react';
+import { Gamepad2, Swords, Heart, Target, Skull, Wand2, Eye, Shield, Wrench, Music, Crown, Zap, Check, HelpCircle, X, Crosshair, Compass, Footprints, Wind, Sparkles } from 'lucide-react';
 import { PixelCanvas } from './PixelCanvas';
 
 interface SquadMemberCardProps {
@@ -29,6 +29,8 @@ const classIcons: Record<string, React.ElementType> = {
   'Warrior': Swords,
   'Scout': Compass,
   'Assassin': Footprints,
+  'Ranger': Wind,
+  'Mage': Sparkles,
 };
 
 const classColors: Record<string, string> = {
@@ -48,6 +50,8 @@ const classColors: Record<string, string> = {
   'Warrior': 'text-amber-500',
   'Scout': 'text-sky-400',
   'Assassin': 'text-violet-400',
+  'Ranger': 'text-teal-400',
+  'Mage': 'text-fuchsia-400',
 };
 
 const classPixelColors: Record<string, string[]> = {
@@ -67,6 +71,8 @@ const classPixelColors: Record<string, string[]> = {
   'Warrior': ['#f59e0b', '#d97706', '#b45309'],
   'Scout': ['#38bdf8', '#0ea5e9', '#0284c7'],
   'Assassin': ['#a78bfa', '#8b5cf6', '#7c3aed'],
+  'Ranger': ['#2dd4bf', '#14b8a6', '#0d9488'],
+  'Mage': ['#e879f9', '#d946ef', '#c026d3'],
 };
 
 // Attendance status badge configurations
