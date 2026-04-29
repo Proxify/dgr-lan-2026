@@ -11,59 +11,66 @@ npm run lint     # ESLint check
 npm run start    # Start production server
 ```
 
+No test suite exists. Lint is the only automated check.
+
+## What This Is
+
+A single-page Next.js 16 (App Router) website for **The Woodlands LAN 2026** — a private LAN party event May 21–24, 2026 hosted by the DGR Gaming Discord community. The site has: a hero with countdown, squad roster, event details, location info, and an RSVP form gated behind Discord auth.
+
 ## Architecture
 
-This is a Next.js 16 App Router application for a LAN party event website with a synthwave/retrowave aesthetic theme.
+### Auth & RSVP Gate
 
-### Tech Stack
-- **Framework**: Next.js 16 with App Router
-- **Auth/DB**: Supabase (Discord OAuth + PostgreSQL)
-- **State**: Zustand with persist middleware
-- **Animations**: GSAP with ScrollTrigger, Framer Motion
-- **Styling**: Tailwind CSS 4 with custom retro theme
+The RSVP form requires Discord OAuth via Supabase. The flow:
+1. `useAuth` hook (client-side) manages session state and calls `/api/discord/check-membership`
+2. The membership check hits the Discord API (`/users/@me/guilds`) using the OAuth `provider_token` to verify the user is in the DGR guild (`DISCORD_GUILD_ID`, default `243941270467248129`)
+3. The check has several fallback trust paths: if the user already has an existing RSVP, if `SKIP_GUILD_CHECK=true`, or if the Discord API returns 401/429/5xx and the user authenticated via Discord
+4. RSVP POST also re-verifies guild membership server-side before writing to Supabase
+5. RSVPs upsert on `discord_user_id` conflict — one RSVP per Discord account
+6. `/auth/callback` exchanges the OAuth code and redirects to `/`
 
-### Key Directories
+The Supabase middleware (`middleware.ts`) refreshes sessions on every non-static request.
+
+### State Management
+
+`useRSVPStore` (Zustand with `persist`) stores the RSVP form in localStorage under key `woodlands-lan-rsvp`. It persists `currentResponse` and `isSubmitted` across page loads. On mount, `RSVPSection` calls `loadExistingRSVP()` to sync with the database and correct stale localStorage state.
+
+### Page Structure
+
+`src/app/page.tsx` composes the single page in order: `Navigation → HeroSection → CountdownSection → EventDetailsSection → SquadSection → LocationSection → RSVPSection → RetroFooter`, separated by `PixelDivider` components.
+
+### Animations
+
+- **GSAP + ScrollTrigger** (`useGSAP` hook): `HeroSection` uses a pinned scroll-scrub zoom/fade. Import GSAP via `@/hooks/useGSAP` (not directly from `gsap`) to ensure ScrollTrigger is registered.
+- **Framer Motion**: entrance animations on hero elements, squad cards, and interactive states. Used for anything React-lifecycle-driven.
+
+### Data Sources
+
+All static data lives in `src/lib/`:
+- `constants.ts` — event dates, location details, equipment options, arrival time choices
+- `squad.ts` — `SQUAD_MEMBERS` array (16 members with name, playerClass, avatar path)
+
+Squad avatars are SVGs at `public/avatars/player-{1-16}.svg`. Generated images are at `public/images/generated/`.
+
+### API Routes
+
+| Route | Auth Required | Purpose |
+|-------|--------------|---------|
+| `POST /api/rsvp` | Yes + DGR member | Submit/update RSVP |
+| `GET /api/rsvp` | Yes | Fetch current user's RSVP |
+| `GET /api/rsvp/list` | No | All RSVPs (for squad display) |
+| `GET /api/discord/check-membership` | Yes | Check DGR guild membership |
+| `GET /auth/callback` | — | Supabase OAuth code exchange |
+
+### Styling
+
+Tailwind CSS v4 with theme defined inline in `globals.css` via `@theme`. Custom font classes: `font-pixel` (`Press Start 2P`) and `font-terminal` (`VT323`). Neon glow utilities (`.glow-blue`, `.glow-pink`, `.glow-green`) and `.pixel-border` are defined as CSS utility classes in `globals.css`. The CRT scanline overlay is a global pseudo-element on `body::after`.
+
+### Environment Variables
 
 ```
-src/
-├── app/                    # Next.js App Router pages & API routes
-│   ├── api/rsvp/          # RSVP submission API (POST/GET)
-│   ├── api/discord/       # Discord membership verification
-│   └── auth/callback/     # Supabase OAuth callback
-├── components/
-│   ├── sections/          # Page sections (Hero, Countdown, Squad, etc.)
-│   ├── layout/            # Navigation, Footer
-│   └── ui/                # Reusable UI components (PixelButton, RetroCard, GlitchText)
-├── hooks/
-│   ├── useAuth.ts         # Discord auth & membership check
-│   ├── useGSAP.ts         # GSAP/ScrollTrigger wrapper
-│   └── useCountdown.ts    # Event countdown timer
-├── lib/
-│   ├── supabase/          # Client, server, middleware Supabase setup
-│   ├── store.ts           # Zustand RSVP form state
-│   └── constants.ts       # Event details, dates, equipment options
-└── types/                 # TypeScript interfaces
-```
-
-### Auth Flow
-1. User clicks "Login with Discord" → Supabase OAuth with `identify guilds` scopes
-2. Callback redirects to `/auth/callback` which exchanges code for session
-3. `useAuth` hook checks membership in DGR Discord server via `/api/discord/check-membership`
-4. RSVP submissions require authenticated user who is a server member
-
-### Database
-Single table `rsvp_responses` in Supabase with Row Level Security. Schema in `supabase-schema.sql`.
-
-### Styling Conventions
-- Uses custom CSS properties defined in `globals.css` (neon colors, retro fonts)
-- Two fonts: `Press Start 2P` (headings), `VT323` (body)
-- Custom Tailwind theme colors: `neon-blue`, `neon-pink`, `neon-green`, `retro-black`, `retro-dark`
-- CSS utility classes: `.glow-blue`, `.glow-pink`, `.pixel-border`, `.retro-card`, `.glitch`
-- CRT scanline overlay applied globally via `.crt-overlay`
-
-### Environment Variables Required
-```
-NEXT_PUBLIC_SUPABASE_URL
-NEXT_PUBLIC_SUPABASE_ANON_KEY
-DISCORD_GUILD_ID
+NEXT_PUBLIC_SUPABASE_URL       # Supabase project URL
+NEXT_PUBLIC_SUPABASE_ANON_KEY  # Supabase anon key
+DISCORD_GUILD_ID               # DGR guild ID (default: 243941270467248129)
+SKIP_GUILD_CHECK               # Set to "true" to bypass Discord membership check in dev
 ```
