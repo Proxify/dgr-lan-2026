@@ -120,6 +120,13 @@ export const SQUAD_MEMBERS: SquadMember[] = [
     playerClass: 'Ranger',
     avatar: '/avatars/player-17.svg',
   },
+  {
+    id: 18,
+    name: 'Aaron Davis',
+    displayName: 'Aaron Davis',
+    playerClass: 'Mage',
+    avatar: '/avatars/player-18.svg',
+  },
 ];
 
 // Get squad member by name
