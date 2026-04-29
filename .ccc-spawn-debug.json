@@ -1,12 +1,14 @@
 {
-  "sessionId": "709e0756-1da9-407c-895f-871923498d50",
-  "sessionConfigDir": "/home/ccc/.ccc/sessions/709e0756-1da9-407c-895f-871923498d50",
+  "sessionId": "2eaff21f-dd82-42ea-80e4-14042119bdef",
+  "sessionConfigDir": "/home/ccc/.ccc/sessions/2eaff21f-dd82-42ea-80e4-14042119bdef",
   "cwd": "/home/ccc/.ccc/projects/b5a7bd10-7398-4c9f-8d69-c677132711cb",
   "cwdHash": "-home-ccc--ccc-projects-b5a7bd10-7398-4c9f-8d69-c677132711cb",
   "persistentClaudeDir": "/home/ccc/.claude",
   "persistentCwdDir": "/home/ccc/.claude/projects/-home-ccc--ccc-projects-b5a7bd10-7398-4c9f-8d69-c677132711cb",
-  "projectsLink": "/home/ccc/.ccc/sessions/709e0756-1da9-407c-895f-871923498d50/projects",
+  "projectsLink": "/home/ccc/.ccc/sessions/2eaff21f-dd82-42ea-80e4-14042119bdef/projects",
   "projectsLinkTarget": "/home/ccc/.claude/projects",
   "projectsLinkExists": true,
-  "conversationsInCwdDir": []
+  "conversationsInCwdDir": [
+    "3816649e-fd59-4a98-8c5e-d7ba7bb4ce05.jsonl"
+  ]
 }
