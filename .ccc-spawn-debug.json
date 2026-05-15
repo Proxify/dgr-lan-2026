@@ -1,11 +1,11 @@
 {
-  "sessionId": "7b3f7cee-2503-4cf3-98f4-9e1f30288aba",
-  "sessionConfigDir": "/home/ccc/.ccc/sessions/7b3f7cee-2503-4cf3-98f4-9e1f30288aba",
+  "sessionId": "12da7ca8-2462-4d25-9e32-131b8873c55c",
+  "sessionConfigDir": "/home/ccc/.ccc/sessions/12da7ca8-2462-4d25-9e32-131b8873c55c",
   "cwd": "/home/ccc/.ccc/projects/b5a7bd10-7398-4c9f-8d69-c677132711cb",
   "cwdHash": "-home-ccc--ccc-projects-b5a7bd10-7398-4c9f-8d69-c677132711cb",
   "persistentClaudeDir": "/home/ccc/.claude",
   "persistentCwdDir": "/home/ccc/.claude/projects/-home-ccc--ccc-projects-b5a7bd10-7398-4c9f-8d69-c677132711cb",
-  "projectsLink": "/home/ccc/.ccc/sessions/7b3f7cee-2503-4cf3-98f4-9e1f30288aba/projects",
+  "projectsLink": "/home/ccc/.ccc/sessions/12da7ca8-2462-4d25-9e32-131b8873c55c/projects",
   "projectsLinkTarget": "/home/ccc/.claude/projects",
   "projectsLinkExists": true,
   "conversationsInCwdDir": [
