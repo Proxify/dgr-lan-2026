@@ -13,6 +13,7 @@ import {
   Wifi,
   UtensilsCrossed,
   Check,
+  Gift,
 } from 'lucide-react';
 
 export function EventDetailsSection() {
@@ -115,10 +116,10 @@ export function EventDetailsSection() {
           </RetroCard>
 
           {/* What to Bring Card */}
-          <RetroCard delay={0.3} className="md:col-span-2 lg:col-span-1">
+          <RetroCard delay={0.3}>
             <div className="flex items-center gap-3 mb-4">
               <Package className="w-8 h-8 text-pixel-yellow" />
-              <h3 className="font-pixel text-sm text-pixel-yellow">LOADOUT</h3>
+              <h3 className="font-pixel text-sm text-pixel-yellow">BRING THIS</h3>
             </div>
 
             <div className="space-y-2 max-h-[280px] overflow-y-auto pr-2 scrollbar-thin">
@@ -132,6 +133,30 @@ export function EventDetailsSection() {
                   transition={{ delay: 0.3 + i * 0.05 }}
                 >
                   <Check className="w-4 h-4 text-neon-green flex-shrink-0" />
+                  <span className="font-terminal text-gray-300">{item}</span>
+                </motion.div>
+              ))}
+            </div>
+          </RetroCard>
+
+          {/* Provided Card */}
+          <RetroCard delay={0.4} className="md:col-span-2 lg:col-span-3">
+            <div className="flex items-center gap-3 mb-4">
+              <Gift className="w-8 h-8 text-neon-pink" />
+              <h3 className="font-pixel text-sm text-neon-pink">PROVIDED BY HOSTS</h3>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+              {EVENT_DETAILS.provided.map((item, i) => (
+                <motion.div
+                  key={i}
+                  className="flex items-start gap-2"
+                  initial={{ opacity: 0, x: -10 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.4 + i * 0.05 }}
+                >
+                  <Check className="w-4 h-4 text-neon-pink flex-shrink-0 mt-1" />
                   <span className="font-terminal text-gray-300">{item}</span>
                 </motion.div>
               ))}

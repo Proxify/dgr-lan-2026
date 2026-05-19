@@ -14,14 +14,15 @@ import {
   Tv,
   Car,
   Trees,
+  AlertTriangle,
 } from 'lucide-react';
 
 const features = [
-  { icon: Waves, label: 'Pool & Hot Tub', color: 'text-neon-blue' },
+  { icon: Waves, label: 'Hot Tub', color: 'text-neon-blue' },
   { icon: Tv, label: 'Gaming Setup', color: 'text-neon-pink' },
   { icon: Wifi, label: 'High-Speed WiFi', color: 'text-neon-green' },
   { icon: Utensils, label: 'Full Kitchen', color: 'text-pixel-yellow' },
-  { icon: Car, label: 'Free Parking', color: 'text-pixel-orange' },
+  { icon: Car, label: 'Driveway + Side St.', color: 'text-pixel-orange' },
   { icon: Trees, label: 'Outdoor Space', color: 'text-neon-green' },
 ];
 
@@ -156,7 +157,7 @@ export function LocationSection() {
             </div>
 
             {/* Features Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 mb-6">
               {features.map((feature, index) => (
                 <motion.div
                   key={feature.label}
@@ -174,6 +175,25 @@ export function LocationSection() {
                 </motion.div>
               ))}
             </div>
+
+            {/* Parking Notice */}
+            <motion.div
+              className="flex items-start gap-3 p-4 bg-retro-black/50 border border-pixel-yellow/50"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.6 }}
+            >
+              <AlertTriangle className="w-6 h-6 text-pixel-yellow flex-shrink-0 mt-1" />
+              <div>
+                <p className="font-pixel text-[0.6rem] text-pixel-yellow mb-1">
+                  PARKING
+                </p>
+                <p className="font-terminal text-base text-gray-300">
+                  {EVENT_DETAILS.venue.parking}
+                </p>
+              </div>
+            </motion.div>
           </div>
         </motion.div>
 

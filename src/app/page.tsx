@@ -2,8 +2,10 @@ import { Navigation } from '@/components/layout/Navigation';
 import { HeroSection } from '@/components/sections/HeroSection';
 import { CountdownSection } from '@/components/sections/CountdownSection';
 import { EventDetailsSection } from '@/components/sections/EventDetailsSection';
+import { ScheduleSection } from '@/components/sections/ScheduleSection';
 import { SquadSection } from '@/components/sections/SquadSection';
 import { LocationSection } from '@/components/sections/LocationSection';
+import { AttendeeInfoSection } from '@/components/sections/AttendeeInfoSection';
 import { RSVPSection } from '@/components/sections/RSVPSection';
 import { RetroFooter } from '@/components/layout/RetroFooter';
 import { PixelDivider } from '@/components/ui/PixelDivider';
@@ -31,6 +33,11 @@ export default function Home() {
 
       <PixelDivider color="pink" />
 
+      {/* Schedule */}
+      <ScheduleSection />
+
+      <PixelDivider />
+
       {/* Squad Members */}
       <SquadSection />
 
@@ -40,6 +47,9 @@ export default function Home() {
       <LocationSection />
 
       <PixelDivider color="pink" />
+
+      {/* Attendee-only Info (gated behind Discord auth — renders null for guests) */}
+      <AttendeeInfoSection />
 
       {/* RSVP Form */}
       <RSVPSection />
