@@ -6,6 +6,15 @@
     "startedAt": "2026-05-19T02:04:54.637Z",
     "lastHeartbeat": "2026-05-19T03:41:25.479Z",
     "touchedFiles": [],
+    "status": "stale"
+  },
+  {
+    "sessionId": "9d495f47-134f-45a5-81db-453e5bac7f99",
+    "agentName": null,
+    "prompt": "",
+    "startedAt": "2026-05-19T16:36:37.721Z",
+    "lastHeartbeat": "2026-05-19T16:49:37.781Z",
+    "touchedFiles": [],
     "status": "active"
   }
 ]
