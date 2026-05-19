@@ -46,6 +46,67 @@ export interface EventDetails {
     features: string[];
   };
   loadout: string[];
+  provided: string[];
+  venue: {
+    address: string;
+    parking: string;
+    amenities: string[];
+  };
+}
+
+// Schedule Types
+export interface ScheduleBlock {
+  time: string;
+  activity: string;
+  highlight?: boolean;
+}
+
+export interface ScheduleDay {
+  day: string;
+  date: string;
+  title: string;
+  accent: 'blue' | 'pink' | 'green' | 'yellow' | 'purple';
+  blocks: ScheduleBlock[];
+  note?: string;
+}
+
+// Halo Tournament Types
+export interface HaloPlaylistEntry {
+  num: number;
+  mode: string;
+  map: string;
+  type: 'FFA' | 'Team' | 'Infection';
+}
+
+export interface HaloTournament {
+  events: { name: string; when: string; format: string }[];
+  playlist: HaloPlaylistEntry[];
+  scoring: {
+    ffa: string;
+    team: string;
+    obstacleCourse: string;
+    overall: string;
+  };
+  prizes: string[];
+  prizeNote: string;
+}
+
+// Comicpalooza Info
+export interface ComicpaloozaInfo {
+  name: string;
+  dates: string;
+  location: string;
+  ourTrip: string;
+  highlights: string[];
+  ticketSunday: string;
+  url: string;
+}
+
+// Attendee-only Info (gated behind Discord auth)
+export interface AttendeeInfo {
+  wifi: { ssid: string; password: string };
+  parkingNote: string;
+  notes: string[];
 }
 
 // Countdown Types
