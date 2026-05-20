@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { PixelButton } from '@/components/ui/PixelButton';
 import { EVENT_DETAILS } from '@/lib/constants';
+import { useAuth } from '@/hooks/useAuth';
 import {
   MapPin,
   ExternalLink,
@@ -15,6 +16,7 @@ import {
   Car,
   Trees,
   AlertTriangle,
+  Lock,
 } from 'lucide-react';
 
 const features = [

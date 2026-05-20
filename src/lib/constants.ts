@@ -24,9 +24,10 @@ export const EVENT_DETAILS: EventDetails = {
   },
   location: {
     name: 'Game On at The Woodlands',
+    // Real Airbnb URL + map URL only revealed after Discord auth (see AttendeeInfoSection)
     url: 'https://airbnb.com/h/gameonatthewoodlands',
-    mapUrl: 'https://www.google.com/maps?q=983+N+Red+Cedar+Cir,+Spring,+TX+77380',
-    address: '983 N Red Cedar Cir, Spring, TX 77380',
+    mapUrl: 'https://www.google.com/maps?q=The+Woodlands+TX',
+    address: 'The Woodlands, TX', // generic — real address gated in venue.address
     features: [
       'Gaming Setup Ready',
       'Hot Tub',
