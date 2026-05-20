@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { RetroCard } from '@/components/ui/RetroCard';
 import { EVENT_DETAILS } from '@/lib/constants';
+import { useAuth } from '@/hooks/useAuth';
 import {
   Calendar,
   MapPin,
@@ -14,9 +15,12 @@ import {
   UtensilsCrossed,
   Check,
   Gift,
+  Lock,
 } from 'lucide-react';
 
 export function EventDetailsSection() {
+  const { user, discordStatus } = useAuth();
+  const isMember = Boolean(user && discordStatus.isMember);
   return (
     <section
       id="details"
@@ -89,7 +93,9 @@ export function EventDetailsSection() {
                   {EVENT_DETAILS.location.name}
                 </p>
                 <p className="font-terminal text-gray-400">
-                  {EVENT_DETAILS.location.address}
+                  {isMember
+                    ? EVENT_DETAILS.venue.address
+                    : EVENT_DETAILS.location.address}
                 </p>
               </div>
 
@@ -104,14 +110,21 @@ export function EventDetailsSection() {
                 ))}
               </div>
 
-              <a
-                href={EVENT_DETAILS.location.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 font-pixel text-[0.6rem] text-neon-blue hover:text-neon-pink transition-colors"
-              >
-                VIEW LOCATION →
-              </a>
+              {isMember ? (
+                <a
+                  href={EVENT_DETAILS.location.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 font-pixel text-[0.6rem] text-neon-blue hover:text-neon-pink transition-colors"
+                >
+                  VIEW LOCATION →
+                </a>
+              ) : (
+                <span className="inline-flex items-center gap-2 font-pixel text-[0.6rem] text-gray-500">
+                  <Lock className="w-3 h-3" />
+                  SIGN IN TO VIEW
+                </span>
+              )}
             </div>
           </RetroCard>
 

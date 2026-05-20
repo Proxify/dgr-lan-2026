@@ -30,6 +30,9 @@ const features = [
 
 export function LocationSection() {
   const sectionRef = useRef<HTMLElement>(null);
+  const { user, discordStatus } = useAuth();
+  const isMember = Boolean(user && discordStatus.isMember);
+
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ['start end', 'end start'],
@@ -111,7 +114,7 @@ export function LocationSection() {
               <div className="absolute bottom-2 right-2 w-6 h-6 border-r-2 border-b-2 border-neon-green" />
             </motion.div>
 
-            {/* Embedded Google Map */}
+            {/* Embedded Google Map — gated behind Discord auth */}
             <motion.div
               className="relative h-48 sm:h-64 bg-retro-black mb-8 overflow-hidden group border-2 border-gray-700"
               initial={{ opacity: 0, scale: 0.95 }}
@@ -119,16 +122,28 @@ export function LocationSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
             >
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3446.8!2d-95.46901425602044!3d30.139155183277555!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzDCsDA4JzIwLjgiTiA5NcKwMjgnMDguNSJX!5e0!3m2!1sen!2sus!4v1"
-                width="100%"
-                height="100%"
-                style={{ border: 0, filter: 'grayscale(50%) contrast(1.1)' }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Event Location Map"
-              />
+              {isMember ? (
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3446.8!2d-95.46901425602044!3d30.139155183277555!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzDCsDA4JzIwLjgiTiA5NcKwMjgnMDguNSJX!5e0!3m2!1sen!2sus!4v1"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0, filter: 'grayscale(50%) contrast(1.1)' }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Event Location Map"
+                />
+              ) : (
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 bg-gradient-to-br from-retro-black to-retro-purple">
+                  <Lock className="w-10 h-10 text-neon-green mb-3" />
+                  <p className="font-pixel text-[0.7rem] text-neon-green mb-2">
+                    LOCATION LOCKED
+                  </p>
+                  <p className="font-terminal text-base text-gray-300 max-w-md">
+                    Sign in with Discord (DGR members only) to unlock the map &amp; address.
+                  </p>
+                </div>
+              )}
 
               {/* Corner Decorations */}
               <div className="absolute top-0 left-0 w-4 h-4 border-l-2 border-t-2 border-neon-green pointer-events-none" />
@@ -143,19 +158,28 @@ export function LocationSection() {
                 <h3 className="font-pixel text-lg text-white mb-2">
                   {EVENT_DETAILS.location.name}
                 </h3>
-                <p className="font-terminal text-gray-400">
-                  {EVENT_DETAILS.location.address}
-                </p>
+                {isMember ? (
+                  <p className="font-terminal text-gray-400">
+                    {EVENT_DETAILS.venue.address}
+                  </p>
+                ) : (
+                  <p className="font-terminal text-gray-400 flex items-center gap-2">
+                    <Lock className="w-4 h-4 text-gray-500" />
+                    The Woodlands, TX — exact address shown after sign-in
+                  </p>
+                )}
               </div>
 
-              <PixelButton
-                onClick={() => window.open(EVENT_DETAILS.location.url, '_blank')}
-              >
-                <span className="flex items-center gap-2">
-                  View on Airbnb
-                  <ExternalLink className="w-4 h-4" />
-                </span>
-              </PixelButton>
+              {isMember && (
+                <PixelButton
+                  onClick={() => window.open(EVENT_DETAILS.location.url, '_blank')}
+                >
+                  <span className="flex items-center gap-2">
+                    View on Airbnb
+                    <ExternalLink className="w-4 h-4" />
+                  </span>
+                </PixelButton>
+              )}
             </div>
 
             {/* Features Grid */}
@@ -178,24 +202,26 @@ export function LocationSection() {
               ))}
             </div>
 
-            {/* Parking Notice */}
-            <motion.div
-              className="flex items-start gap-3 p-4 bg-retro-black/50 border border-pixel-yellow/50"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.6 }}
-            >
-              <AlertTriangle className="w-6 h-6 text-pixel-yellow flex-shrink-0 mt-1" />
-              <div>
-                <p className="font-pixel text-[0.6rem] text-pixel-yellow mb-1">
-                  PARKING
-                </p>
-                <p className="font-terminal text-base text-gray-300">
-                  {EVENT_DETAILS.venue.parking}
-                </p>
-              </div>
-            </motion.div>
+            {/* Parking Notice — gated (mentions side street, ID'ing) */}
+            {isMember && (
+              <motion.div
+                className="flex items-start gap-3 p-4 bg-retro-black/50 border border-pixel-yellow/50"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.6 }}
+              >
+                <AlertTriangle className="w-6 h-6 text-pixel-yellow flex-shrink-0 mt-1" />
+                <div>
+                  <p className="font-pixel text-[0.6rem] text-pixel-yellow mb-1">
+                    PARKING
+                  </p>
+                  <p className="font-terminal text-base text-gray-300">
+                    {EVENT_DETAILS.venue.parking}
+                  </p>
+                </div>
+              </motion.div>
+            )}
           </div>
         </motion.div>
 
